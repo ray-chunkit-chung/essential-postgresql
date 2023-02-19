@@ -1,0 +1,37 @@
+version: '3'
+
+# https://graspingtech.com/docker-compose-postgresql/#:~:text=Run%20the%20docker%20compose%20up%20to%20start%20the,database%20using%20a%20tool%20like%20DBeaver%20or%20pgAdmin.
+services:
+  postgres:
+    image: postgres:13.1
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "pg_isready",
+          "-q",
+          "-d",
+          "postgres",
+          "-U",
+          "root"
+        ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    restart: always
+    environment:
+      - POSTGRES_USER=root  # demo only
+      - POSTGRES_PASSWORD=password  # demo only
+      - APP_DB_USER=docker  # demo only
+      - APP_DB_PASS=docker  # demo only
+      - APP_DB_NAME=docker  # demo only
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 1235:8080
