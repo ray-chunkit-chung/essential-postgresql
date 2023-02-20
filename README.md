@@ -9,8 +9,8 @@ The postgresql is at network name postgres:5432
 from pydantic import PostgresDsn
 QLALCHEMY_DATABASE_URI = PostgresDsn.build(
     scheme="postgresql",
-    user="docker",
-    password="docker",
+    user="docker",  ## demo only
+    password="docker",  ## demo only
     host="postgres",
     path=f"/{'docker' or ''}",
 )
