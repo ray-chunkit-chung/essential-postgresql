@@ -6,7 +6,8 @@ docker-compose up
 
 The postgresql is at network name postgres:5432
 ```python
-SQLALCHEMY_DATABASE_URI = PostgresDsn.build(
+from pydantic import PostgresDsn
+QLALCHEMY_DATABASE_URI = PostgresDsn.build(
     scheme="postgresql",
     user="docker",
     password="docker",
@@ -15,6 +16,6 @@ SQLALCHEMY_DATABASE_URI = PostgresDsn.build(
 )
 ```
 
-pgadmin is at localhost:1235
+pgadmin is at localhost:1235 using image adminer
 
-The api endpoints are at localhost:8001
+The rest api endpoints are at localhost:8001
