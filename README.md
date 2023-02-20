@@ -18,4 +18,4 @@ QLALCHEMY_DATABASE_URI = PostgresDsn.build(
 
 pgadmin is at localhost:1235 using image adminer
 
-The rest api endpoints are at localhost:8001
+The rest api endpoints are at localhost:8001/docs
