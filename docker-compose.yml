@@ -1,7 +1,21 @@
+# https://fastapi.tiangolo.com/deployment/docker/#:~:text=Go%20to%20the%20project%20directory%20%28in%20where%20your,your%20current%20server%20%28and%20number%20of%20CPU%20cores%29.
+# https://graspingtech.com/docker-compose-postgresql/#:~:text=Run%20the%20docker%20compose%20up%20to%20start%20the,database%20using%20a%20tool%20like%20DBeaver%20or%20pgAdmin.
+# https://runnable.com/docker/docker-compose-networking#:~:text=You%20can%20even%20use%20pre-existing%20networks%20with%20Docker,connecting%20the%20app%E2%80%99s%20containers%20to%20the%20i-already-created-this%20network.
+
 version: '3'
 
-# https://graspingtech.com/docker-compose-postgresql/#:~:text=Run%20the%20docker%20compose%20up%20to%20start%20the,database%20using%20a%20tool%20like%20DBeaver%20or%20pgAdmin.
 services:
+  sql_app:
+    build: sql_app
+    ports:
+      - "8001:8001"
+    links:
+      - "postgres"
+    depends_on:
+      - "postgres"
+    networks:
+      - postgres-network
+
   postgres:
     image: postgres:13.1
     healthcheck:
@@ -20,18 +34,28 @@ services:
       retries: 10
     restart: always
     environment:
-      - POSTGRES_USER=root  # demo only
-      - POSTGRES_PASSWORD=password  # demo only
-      - APP_DB_USER=docker  # demo only
-      - APP_DB_PASS=docker  # demo only
-      - APP_DB_NAME=docker  # demo only
+      - POSTGRES_USER=root # demo only
+      - POSTGRES_PASSWORD=password # demo only
+      - APP_DB_USER=docker # demo only
+      - APP_DB_PASS=docker # demo only
+      - APP_DB_NAME=docker # demo only
     volumes:
       - ./db:/docker-entrypoint-initdb.d/
     ports:
       - 5432:5432
+    networks:
+      - postgres-network
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 1235:8080
+    networks:
+      - postgres-network
+    depends_on:
+      - "postgres"
+
+networks:
+  postgres-network:
+    driver: bridge

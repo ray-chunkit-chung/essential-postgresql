@@ -8,6 +8,8 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+# https://fastapi.tiangolo.com/tutorial/sql-databases/
+# uvicorn sql_app.main:app --reload
 
 # Dependency
 def get_db():
@@ -51,3 +53,4 @@ def create_item_for_user(
 def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     items = crud.get_items(db, skip=skip, limit=limit)
     return items
+

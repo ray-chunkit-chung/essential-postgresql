@@ -7,7 +7,7 @@ SQLALCHEMY_DATABASE_URI = PostgresDsn.build(
     scheme="postgresql",
     user="docker",
     password="docker",
-    host="192.168.112.3",
+    host="postgres",
     path=f"/{'docker' or ''}",
 )
 # SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_app.db"
@@ -21,3 +21,6 @@ engine = create_engine(
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
+
+
+# uvicorn sql_app.main:app --reload
