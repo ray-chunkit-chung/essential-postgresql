@@ -1,4 +1,4 @@
-# postgresql with api endpoints
+# postgresql with api endpoints using fastapi
 
 ```bash
 docker-compose up
