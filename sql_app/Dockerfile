@@ -5,7 +5,10 @@ WORKDIR /workspace
 COPY ./requirements.txt /workspace/requirements.txt
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 COPY . /workspace/app
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8001"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 # If behind proxy e.g. nginx
 # CMD ["uvicorn", "app.main:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "80"]
+
+# Test in local folder
+# uvicorn sql_app.main:app --reload
